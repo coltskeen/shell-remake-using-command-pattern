@@ -1,20 +1,29 @@
 using System.Net;
 using System.Net.Sockets;
 
-bool isExit = false;
-int exitDefault = 0;
-
-
 // Allow execution of command a random number of times
-while (!isExit)
+while (true)
 {
     Console.Write("$ ");
     // Wait for user input
     var command = Console.ReadLine();
 
-    if (command == $"exit {exitDefault}".ToLower())
+    // If the exit command is provided
+    if (command != null && command.StartsWith("exit"))
     {
-        isExit = true;
+        string[] cmdArgs = command.Split(" ");
+        
+        // And a code status is provided
+        if (cmdArgs.Length > 1)
+        {
+            // Exit with that code status
+            Environment.Exit(int.Parse(cmdArgs[1]));
+        }
+        else
+        {
+            // Else default to zero for the exit
+            Environment.Exit(0);
+        }
     }
     else
     {
@@ -22,3 +31,5 @@ while (!isExit)
     }
 
 }
+
+
