@@ -1,12 +1,8 @@
 using System.Net;
 using System.Net.Sockets;
 
-// Create a random number for REPL loops
-Random rnd = new();
-int loops = rnd.Next(1, 10);
-
 // Allow execution of command a random number of times
-for (int i = 0; i < loops; i++)
+while (true)
 {
     Console.Write("$ ");
     // Wait for user input
