@@ -1,35 +1,43 @@
+using src.commands;
+using src.commands.concrete_commands;
+using src.invokers;
+using src.receivers;
 using System.Net;
 using System.Net.Sockets;
 
-// Allow execution of command a random number of times
-while (true)
+namespace src
 {
-    Console.Write("$ ");
-    // Wait for user input
-    var command = Console.ReadLine();
-
-    // If the exit command is provided
-    if (command != null && command.StartsWith("exit"))
+    class Program
     {
-        string[] cmdArgs = command.Split(" ");
-        
-        // And a code status is provided
-        if (cmdArgs.Length > 1)
+        static void Main(string[] args)
         {
-            // Exit with that code status
-            Environment.Exit(int.Parse(cmdArgs[1]));
-        }
-        else
-        {
-            // Else default to zero for the exit
-            Environment.Exit(0);
+            // Allow execution of command a random number of times
+            while (true)
+            {
+                Console.Write("$ ");
+                // Wait for user input
+                var command = Console.ReadLine();
+
+                Shell shell = new Shell();
+                
+                ICommand shellExit = new ExitCommand(shell);
+
+                User user = new User();
+
+                // If the exit command is provided
+                if (command != null && command.StartsWith("exit"))
+                { 
+                    user.SetCommand(shellExit);
+                    user.Enter(command);            
+                }
+                else
+                {
+                    Console.WriteLine($"{command}: command not found");
+                }
+            }
         }
     }
-    else
-    {
-        Console.WriteLine($"{command}: command not found");
-    }
-
 }
+
 
 
