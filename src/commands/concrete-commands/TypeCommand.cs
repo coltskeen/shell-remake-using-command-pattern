@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 namespace src.commands.concrete_commands
 {
     /// <summary>
-    /// The EchoCommand class implements the ICommand interface and
-    /// encapsulates the command to Echo the argument input.
+    /// The TypeCommand class implements the ICommand interface and
+    /// encapsulates the command to show if the argument is a builtin or not.
     /// </summary>
-    public class EchoCommand(Shell shell) : ICommand
+    public class TypeCommand(Shell shell) : ICommand
     {
         // The receiver object that performs the actual action
         private readonly Shell _shell = shell;
 
         /// <summary>
-        /// Initializes a new instance of the EchoCommand class with the specified receiver.
+        /// Initializes a new instance of the TypeCommand class with the specified receiver.
         /// </summary>
         /// <param name="shell">The receiver object that will execute the command.</param>
-        public void Execute(string command) => _shell.Echo(command);
+        public void Execute(string command) => _shell.Type(command);
     }
 }

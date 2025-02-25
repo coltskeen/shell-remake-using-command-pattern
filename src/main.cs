@@ -22,6 +22,7 @@ namespace src
                 
                 ICommand shellExit = new ExitCommand(shell);
                 ICommand shellEcho = new EchoCommand(shell);
+                ICommand shellType = new TypeCommand(shell);
 
                 User user = new User();
 
@@ -31,9 +32,16 @@ namespace src
                     user.SetCommand(shellExit);
                     user.Enter(command);            
                 }
-                else if (command != null && command.StartsWith("echo"))
+                // If the echo command is provided
+                else if (command != null && command.StartsWith("echo "))
                 {
                     user.SetCommand(shellEcho);
+                    user.Enter(command);
+                }
+                // If the type command is provided
+                else if (command != null && command.StartsWith("type "))
+                {
+                    user.SetCommand(shellType);
                     user.Enter(command);
                 }
                 else

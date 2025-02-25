@@ -45,10 +45,20 @@ namespace src.receivers
             {
                 Console.WriteLine(command.Substring(5));
             }
-            // Remove "echo" if it exists at the beginning
-            else if (command.StartsWith("echo"))
+        }
+
+        public void Type(string command)
+        {
+            List<string> builtins = ["exit", "echo", "type"];
+            string[] cmdArgs = command.Split(" ");
+
+            if (builtins.Contains(cmdArgs[1]))
             {
-                Console.WriteLine(command.Substring(4));
+                Console.WriteLine($"{command.Substring(5)} is a shell builtin");
+            }
+            else
+            {
+                Console.WriteLine($"{command.Substring(5)}: command not found");
             }
         }
     }
