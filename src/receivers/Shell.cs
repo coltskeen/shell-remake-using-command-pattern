@@ -33,5 +33,23 @@ namespace src.receivers
                 Environment.Exit(0);
             }
         }
+
+        /// <summary>
+        /// Outputs the provided command string after removing the "echo" keyword.
+        /// </summary>
+        /// <param name="command">The command string containing the "echo" keyword and the message to be echoed.</param>
+        public void Echo(string command)
+        {
+            // Remove "echo " if it exists at the beginning
+            if (command.StartsWith("echo "))
+            {
+                Console.WriteLine(command.Substring(5));
+            }
+            // Remove "echo" if it exists at the beginning
+            else if (command.StartsWith("echo"))
+            {
+                Console.WriteLine(command.Substring(4));
+            }
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace src
                 Shell shell = new Shell();
                 
                 ICommand shellExit = new ExitCommand(shell);
+                ICommand shellEcho = new EchoCommand(shell);
 
                 User user = new User();
 
@@ -29,6 +30,11 @@ namespace src
                 { 
                     user.SetCommand(shellExit);
                     user.Enter(command);            
+                }
+                else if (command != null && command.StartsWith("echo"))
+                {
+                    user.SetCommand(shellEcho);
+                    user.Enter(command);
                 }
                 else
                 {
