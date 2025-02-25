@@ -98,3 +98,58 @@ class Program
 In this example, the LightOnCommand and LightOffCommand classes implement the ICommand interface and encapsulate the actions of turning the light on and off, respectively. The RemoteControl class acts as the invoker that triggers the command, and the Light class is the receiver that performs the actual action.
 
 This pattern is useful for implementing features like undo/redo, logging, and transaction management. If you have any more questions or need further clarification, feel free to ask! 😊
+
+Type Code Sample:
+int exitReturnCode = 0;
+bool shouldExit = false;
+List<string> builtins = ["exit", "echo", "type"];
+while (!shouldExit) {
+  Console.Write("$ ");
+  string command = Console.ReadLine()!;
+  string[] parts =
+      command.Split(' ', StringSplitOptions.TrimEntries |
+                             StringSplitOptions.RemoveEmptyEntries);
+  if (!ExecuteBuiltIn(parts)) {
+    Console.WriteLine($"{command}: command not found");
+  }
+}
+return exitReturnCode;
+bool ExecuteBuiltIn(string[] parts) {
+  if (builtins.Contains(parts[0])) {
+    switch (parts[0]) {
+    case "exit":
+      if (parts.Length > 1) {
+        exitReturnCode = int.Parse(parts[1], CultureInfo.InvariantCulture);
+      }
+      shouldExit = true;
+      break;
+    case "echo":
+      for (int i = 1; i < parts.Length; i++) {
+        if (i > 1) {
+          Console.Write(' ');
+        }
+        Console.Write(parts[i]);
+      }
+      Console.WriteLine();
+      break;
+    case "type":
+      string? cmd = parts.Length > 1 ? parts[1] : null;
+      if (cmd == null) {
+        break;
+      }
+      if (builtins.Contains(cmd)) {
+        Console.WriteLine($"{cmd} is a shell builtin");
+      } else {
+        Console.WriteLine($"{cmd}: not found");
+      }
+      break;
+    default:
+      throw new ShellException($"Unknown builtin {parts[0]}");
+    }
+    return true;
+  } else {
+    return false;
+  }
+};
+internal sealed class ShellException
+(string message) : Exception(message);
