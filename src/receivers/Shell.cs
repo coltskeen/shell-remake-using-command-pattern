@@ -45,8 +45,17 @@ namespace src.receivers
             {
                 Console.WriteLine(command.Substring(5));
             }
+            // Remove "echo" if it exists at the beginning
+            if (command.StartsWith("echo"))
+            {
+                Console.WriteLine(command.Substring(4));
+            }
         }
 
+        /// <summary>
+        /// This method takes a command string as input and checks if the command is a shell builtin.
+        /// </summary>
+        /// <param name="command">The command string to be checked.</param>
         public void Type(string command)
         {
             List<string> builtins = ["exit", "echo", "type"];
@@ -58,8 +67,42 @@ namespace src.receivers
             }
             else
             {
+                // If the cmdArgs exists and is not one of the builtins, then check the path for an executable
+                if (cmdArgs[1] != null)
+                {
+                    string originalPath = Environment.GetEnvironmentVariable("PATH")!;
+                    string[] paths = originalPath.Split([Path.PathSeparator]);
+                   
+                    string fullPath = GetFullPath(cmdArgs[1], paths);
+
+                    if (fullPath != null)
+                    {
+                        Console.WriteLine($"{cmdArgs[1]} is {fullPath}");
+                    }
+                }
+
+                // Otherwise send command not found
                 Console.WriteLine($"{command.Substring(5)}: not found");
             }
+        }
+
+        private static string GetFullPath(string fileName, string[] paths)
+        {
+            if (File.Exists(fileName))
+            {
+                return Path.GetFullPath(fileName);
+            }
+
+            foreach (string p in paths)
+            {
+                string fullPath = Path.Combine(p, fileName);
+                if (File.Exists(fullPath))
+                {
+                    return fullPath;
+                }
+            }
+
+            return null;
         }
     }
 }
