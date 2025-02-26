@@ -93,7 +93,7 @@ namespace src.receivers
 
             // Run the executable
             using Process process = new Process();
-            process.StartInfo.FileName = fullPath;
+            process.StartInfo.FileName = cmdArgs[0];
             process.StartInfo.Arguments = string.Join(" ", cmdArgs.Skip(1).ToArray());
             process.Start();
         }
