@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -75,6 +76,23 @@ namespace src.receivers
                 string fullPath = GetFullPath(cmdArgs[1]);
                 Console.WriteLine(fullPath != null ? $"{cmdArgs[1]} is {fullPath}" : $"{cmdArgs[1]}: not found");
             }
+        }
+
+        /// <summary>
+        /// This method takes a command string as input, finds the full path of the executable,
+        /// and runs the executable.
+        /// </summary>
+        /// <param name="command">The command string to be executed.</param>
+        public void Executable(string command)
+        {
+            // Split the command string into arguments
+            string[] cmdArgs = command.Split(' ');
+
+            // Get the full path of the command if it exists in the system PATH
+            string fullPath = GetFullPath(cmdArgs[0]);
+
+            // Run the executable
+            Process.Start(fullPath);
         }
 
         /// <summary>

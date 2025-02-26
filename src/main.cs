@@ -23,6 +23,7 @@ namespace src
                 ICommand shellExit = new ExitCommand(shell);
                 ICommand shellEcho = new EchoCommand(shell);
                 ICommand shellType = new TypeCommand(shell);
+                ICommand shellExecutable = new ExecutableCommand(shell);
 
                 User user = new User();
 
@@ -42,6 +43,12 @@ namespace src
                 else if (command != null && command.StartsWith("type "))
                 {
                     user.SetCommand(shellType);
+                    user.Enter(command);
+                }
+                // If the executable command is provided
+                else if (command != null && command.Contains("exe"))
+                {
+                    user.SetCommand(shellExecutable);
                     user.Enter(command);
                 }
                 else
