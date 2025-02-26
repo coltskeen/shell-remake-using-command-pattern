@@ -92,7 +92,7 @@ namespace src.receivers
             string fullPath = GetFullPath(cmdArgs[0]);
 
             // Run the executable
-            Process.Start(fullPath);
+            Process.Start(fullPath, cmdArgs[1]);
         }
 
         /// <summary>
