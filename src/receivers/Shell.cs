@@ -80,9 +80,12 @@ namespace src.receivers
                         Console.WriteLine($"{cmdArgs[1]} is {fullPath}");
                     }
                 }
+                else
+                {
+                    // Otherwise send command not found
+                    Console.WriteLine($"{command.Substring(5)}: not found");
+                }
 
-                // Otherwise send command not found
-                Console.WriteLine($"{command.Substring(5)}: not found");
             }
         }
 
