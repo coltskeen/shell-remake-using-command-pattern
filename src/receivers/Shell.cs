@@ -13,6 +13,8 @@ namespace src.receivers
     /// </summary>
     public class Shell
     {
+        private static readonly List<string> Builtins = new List<string> { "exit", "echo", "type" };
+
         /// <summary>
         /// Exits the application with the provided exit code.
         /// </summary>
@@ -46,7 +48,7 @@ namespace src.receivers
                 Console.WriteLine(command.Substring(5));
             }
             // Remove "echo" if it exists at the beginning
-            if (command.StartsWith("echo"))
+            else if (command.StartsWith("echo"))
             {
                 Console.WriteLine(command.Substring(4));
             }
@@ -54,57 +56,53 @@ namespace src.receivers
 
         /// <summary>
         /// This method takes a command string as input and checks if the command is a shell builtin.
+        /// If not, it checks the system PATH for an executable.
         /// </summary>
         /// <param name="command">The command string to be checked.</param>
         public void Type(string command)
         {
-            List<string> builtins = ["exit", "echo", "type"];
-            string[] cmdArgs = command.Split(" ");
+            // Split the command string into arguments
+            string[] cmdArgs = command.Split(' ');
 
-            if (builtins.Contains(cmdArgs[1]))
+            // Check if the command is a shell builtin
+            if (Builtins.Contains(cmdArgs[1]))
             {
-                Console.WriteLine($"{command.Substring(5)} is a shell builtin");
+                Console.WriteLine($"{cmdArgs[1]} is a shell builtin");
             }
             else
             {
-                // If the cmdArgs exists and is not one of the builtins, then check the path for an executable
-                if (cmdArgs[1] != null)
-                {
-                    string originalPath = Environment.GetEnvironmentVariable("PATH")!;
-                    string[] paths = originalPath.Split([Path.PathSeparator]);
-                   
-                    string fullPath = GetFullPath(cmdArgs[1], paths);
-
-                    if (fullPath != null)
-                    {
-                        Console.WriteLine($"{cmdArgs[1]} is {fullPath}");
-                    }
-                }
-                else
-                {
-                    // Otherwise send command not found
-                    Console.WriteLine($"{command.Substring(5)}: not found");
-                }
-
+                // Get the full path of the command if it exists in the system PATH
+                string fullPath = GetFullPath(cmdArgs[1]);
+                Console.WriteLine(fullPath != null ? $"{cmdArgs[1]} is {fullPath}" : $"{cmdArgs[1]}: not found");
             }
         }
 
-        private static string GetFullPath(string fileName, string[] paths)
+        /// <summary>
+        /// This method takes a file name and checks if it exists in the system PATH.
+        /// </summary>
+        /// <param name="fileName">The file name to be checked.</param>
+        /// <returns>The full path of the file if found, otherwise null.</returns>
+        private static string GetFullPath(string fileName)
         {
+            // Check if the file exists in the current directory
             if (File.Exists(fileName))
             {
                 return Path.GetFullPath(fileName);
             }
 
-            foreach (string p in paths)
+            // Get the system PATH and split it into individual paths
+            string[] paths = Environment.GetEnvironmentVariable("PATH").Split(Path.PathSeparator);
+            foreach (string path in paths)
             {
-                string fullPath = Path.Combine(p, fileName);
+                // Combine the path with the file name and check if it exists
+                string fullPath = Path.Combine(path, fileName);
                 if (File.Exists(fullPath))
                 {
                     return fullPath;
                 }
             }
 
+            // Return null if the file is not found
             return null;
         }
     }
