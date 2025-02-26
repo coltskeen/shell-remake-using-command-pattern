@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 namespace src.commands.concrete_commands
 {
     /// <summary>
-    /// The ExecutableCommand class implements the ICommand interface and
-    /// encapsulates the command to start an executable.
+    /// The PwdCommand class implements the ICommand interface and
+    /// encapsulates the command to print the working directory.
     /// </summary>
-    public class ExecutableCommand(Shell shell) : ICommand
+    public class PwdCommand(Shell shell) : ICommand
     {
         // The receiver object that performs the actual action
         private readonly Shell _shell = shell;
 
         /// <summary>
-        /// Initializes a new instance of the ExecutableCommand class with the specified receiver.
+        /// Initializes a new instance of the PwdCommand class with the specified receiver.
         /// </summary>
         /// <param name="shell">The receiver object that will execute the command.</param>
-        public void Execute(string command) => _shell.Executable(command);
+        public void Execute(string command) => _shell.Pwd();
     }
 }

@@ -89,13 +89,19 @@ namespace src.receivers
             string[] cmdArgs = command.Split(' ');
 
             // Get the full path of the command if it exists in the system PATH
-            string fullPath = GetFullPath(cmdArgs[0]);
+            //string fullPath = GetFullPath(cmdArgs[0]); --> // Commenting out for now. For some reason CodeCrafters isn't using the full path to run the exes but running from current directory.
 
             // Run the executable
             using Process process = new Process();
             process.StartInfo.FileName = cmdArgs[0];
             process.StartInfo.Arguments = string.Join(" ", cmdArgs.Skip(1).ToArray());
             process.Start();
+        }
+
+        
+        public void Pwd()
+        {
+            Console.WriteLine(Directory.GetCurrentDirectory());
         }
 
         /// <summary>

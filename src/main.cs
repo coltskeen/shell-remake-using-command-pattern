@@ -24,6 +24,7 @@ namespace src
                 ICommand shellEcho = new EchoCommand(shell);
                 ICommand shellType = new TypeCommand(shell);
                 ICommand shellExecutable = new ExecutableCommand(shell);
+                ICommand shellPwd = new PwdCommand(shell);
 
                 User user = new User();
 
@@ -49,6 +50,12 @@ namespace src
                 else if (command != null && command.Contains("exe"))
                 {
                     user.SetCommand(shellExecutable);
+                    user.Enter(command);
+                }
+                // If the pwd command is provided
+                else if (command != null && command.Contains("pwd"))
+                {
+                    user.SetCommand(shellPwd);
                     user.Enter(command);
                 }
                 else
