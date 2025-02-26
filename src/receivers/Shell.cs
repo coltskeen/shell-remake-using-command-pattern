@@ -14,7 +14,7 @@ namespace src.receivers
     /// </summary>
     public class Shell
     {
-        private static readonly List<string> Builtins = new List<string> { "exit", "echo", "type" };
+        private static readonly List<string> Builtins = new List<string> { "exit", "echo", "type", "pwd" };
 
         /// <summary>
         /// Exits the application with the provided exit code.

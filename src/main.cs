@@ -53,7 +53,7 @@ namespace src
                     user.Enter(command);
                 }
                 // If the pwd command is provided
-                else if (command != null && command.Contains("pwd"))
+                else if (command != null && command.StartsWith("pwd"))
                 {
                     user.SetCommand(shellPwd);
                     user.Enter(command);
