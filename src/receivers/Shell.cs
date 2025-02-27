@@ -116,6 +116,7 @@ namespace src.receivers
             // Split the command string into arguments
             string[] cmdArgs = command.Split(' ');
             string fullPath = Path.GetFullPath(cmdArgs[1]);
+            string home = Environment.GetEnvironmentVariable("HOME");
 
             // Navigate to the requested directory using absolute paths
             if (Path.IsPathRooted(cmdArgs[1]) && Directory.Exists(cmdArgs[1]))
@@ -127,9 +128,12 @@ namespace src.receivers
             {
                 Directory.SetCurrentDirectory(fullPath);
             }
-
             // Navigate to the requested directory using ~
-
+            else if (cmdArgs[1].Contains('~') && home != null)
+            {
+                fullPath = Path.Combine(home, cmdArgs[1].Trim('~', '/'));
+                Directory.SetCurrentDirectory(fullPath);
+            }
             else
             {
                 Console.WriteLine($"{cmdArgs[0]}: {cmdArgs[1]}: No such file or directory");
@@ -164,5 +168,27 @@ namespace src.receivers
             // Return null if the file is not found
             return null;
         }
+
+
+        //private static string GetHomePath(string fileName)
+        //{
+        //    // Get the system HOME variable
+        //    string home = Environment.GetEnvironmentVariable("HOME");
+        //    if (home != null) {
+
+
+        //    foreach (string path in paths)
+        //    {
+        //        // Combine the path with the file name and check if it exists
+        //        string fullPath = Path.Combine(path, fileName);
+        //        if (File.Exists(fullPath))
+        //        {
+        //            return fullPath;
+        //        }
+        //    }
+
+        //    // Return null if the file is not found
+        //    return null;
+        //}
     }
 }
