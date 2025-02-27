@@ -115,14 +115,18 @@ namespace src.receivers
         {
             // Split the command string into arguments
             string[] cmdArgs = command.Split(' ');
+            string fullPath = Path.GetFullPath(cmdArgs[1]);
 
             // Navigate to the requested directory using absolute paths
             if (Path.IsPathRooted(cmdArgs[1]) && Directory.Exists(cmdArgs[1]))
             {
                 Directory.SetCurrentDirectory(cmdArgs[1]);
             }
-
             // Navigate to the requested directory using relative paths
+            else if (fullPath != null && Directory.Exists(fullPath))
+            {
+                Directory.SetCurrentDirectory(fullPath);
+            }
 
             // Navigate to the requested directory using ~
 
