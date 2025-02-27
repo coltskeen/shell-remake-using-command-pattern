@@ -25,6 +25,7 @@ namespace src
                 ICommand shellType = new TypeCommand(shell);
                 ICommand shellExecutable = new ExecutableCommand(shell);
                 ICommand shellPwd = new PwdCommand(shell);
+                ICommand shellCd = new CdCommand(shell);
 
                 User user = new User();
 
@@ -56,6 +57,12 @@ namespace src
                 else if (command != null && command.StartsWith("pwd"))
                 {
                     user.SetCommand(shellPwd);
+                    user.Enter(command);
+                }
+                // If the cd command is provided
+                else if (command != null && command.StartsWith("cd"))
+                {
+                    user.SetCommand(shellCd);
                     user.Enter(command);
                 }
                 else

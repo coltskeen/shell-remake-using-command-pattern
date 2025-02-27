@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -98,10 +99,37 @@ namespace src.receivers
             process.Start();
         }
 
-        
+        /// <summary>
+        /// Prints the current working directory to the console.
+        /// </summary>
         public void Pwd()
         {
             Console.WriteLine(Directory.GetCurrentDirectory());
+        }
+
+        /// <summary>
+        /// Changes the current working directory to the specified path.
+        /// </summary>
+        /// <param name="command">The command string to be executed.</param>
+        public void Cd(string command)
+        {
+            // Split the command string into arguments
+            string[] cmdArgs = command.Split(' ');
+
+            // Navigate to the requested directory using absolute paths
+            if (Path.IsPathRooted(cmdArgs[1]) && Directory.Exists(cmdArgs[1]))
+            {
+                Directory.SetCurrentDirectory(cmdArgs[1]);
+            }
+
+            // Navigate to the requested directory using relative paths
+
+            // Navigate to the requested directory using ~
+
+            else
+            {
+                Console.WriteLine($"{cmdArgs[0]}: {cmdArgs[1]}: No such file or directory");
+            }
         }
 
         /// <summary>
