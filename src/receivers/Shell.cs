@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace src.receivers
 {
@@ -44,6 +45,8 @@ namespace src.receivers
         /// <param name="command">The command string containing the "echo" keyword and the message to be echoed.</param>
         public void Echo(string command)
         {
+            //string[] cmdArgs = GetCmdArgs(command);
+
             // Remove "echo " if it exists at the beginning
             if (command.StartsWith("echo "))
             {
@@ -140,6 +143,29 @@ namespace src.receivers
             }
         }
 
+
+        public void Cat(string command) 
+        { 
+            Console.WriteLine(command); 
+        }
+
+
+        private string[] GetCmdArgs(string command)
+        {
+            // Throw exception if command is null
+            ArgumentNullException.ThrowIfNull(command);
+
+            // Regex pattern to look for the single quotes
+            string pattern = @"'([^']*)'|(\S+)";
+            MatchCollection matches = Regex.Matches(command, pattern);
+
+            return matches.Select(match => 
+                match.Groups[1].Success 
+                     ? match.Groups[1].Value
+                     : match.Groups[2].Value)
+                .ToArray();
+        }
+
         /// <summary>
         /// This method takes a file name and checks if it exists in the system PATH.
         /// </summary>
@@ -168,27 +194,5 @@ namespace src.receivers
             // Return null if the file is not found
             return null;
         }
-
-
-        //private static string GetHomePath(string fileName)
-        //{
-        //    // Get the system HOME variable
-        //    string home = Environment.GetEnvironmentVariable("HOME");
-        //    if (home != null) {
-
-
-        //    foreach (string path in paths)
-        //    {
-        //        // Combine the path with the file name and check if it exists
-        //        string fullPath = Path.Combine(path, fileName);
-        //        if (File.Exists(fullPath))
-        //        {
-        //            return fullPath;
-        //        }
-        //    }
-
-        //    // Return null if the file is not found
-        //    return null;
-        //}
     }
 }
