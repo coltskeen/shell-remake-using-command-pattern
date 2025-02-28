@@ -45,17 +45,12 @@ namespace src.receivers
         /// <param name="command">The command string containing the "echo" keyword and the message to be echoed.</param>
         public void Echo(string command)
         {
-            //string[] cmdArgs = GetCmdArgs(command);
+            string[] cmdArgs = GetCmdArgs(command);
 
             // Remove "echo " if it exists at the beginning
-            if (command.StartsWith("echo "))
+            if (cmdArgs[0].StartsWith("echo"))
             {
-                Console.WriteLine(command.Substring(5));
-            }
-            // Remove "echo" if it exists at the beginning
-            else if (command.StartsWith("echo"))
-            {
-                Console.WriteLine(command.Substring(4));
+                Console.WriteLine(cmdArgs[1]);
             }
         }
 
