@@ -47,10 +47,13 @@ namespace src.receivers
         {
             string[] cmdArgs = GetCmdArgs(command);
 
-            // Remove "echo " if it exists at the beginning
-            if (cmdArgs[0].StartsWith("echo"))
+            if (cmdArgs.Length > 0 && cmdArgs[0].StartsWith("echo"))
             {
-                Console.WriteLine(cmdArgs[1]);
+                // Display the arguments
+                for (int i = 1; i < cmdArgs.Length; i++)
+                {
+                    Console.WriteLine(cmdArgs[i]);
+                }
             }
         }
 
@@ -140,8 +143,40 @@ namespace src.receivers
 
 
         public void Cat(string command) 
-        { 
-            Console.WriteLine(command); 
+        {
+            // Extract the arguments
+            string[] cmdArgs = GetCmdArgs(command);
+
+            // Get the file path(s) - including relative paths
+            for (int i = 1; i < cmdArgs.Length; i++)
+            {
+                string fullPath = Path.GetFullPath(cmdArgs[i]);
+                string home = Environment.GetEnvironmentVariable("HOME");
+
+                // Read if an absolute path
+                if (Path.IsPathRooted(cmdArgs[i]) && File.Exists(cmdArgs[i]))
+                {
+                    Console.WriteLine(File.ReadAllText(fullPath));
+                }
+                // Read if a relative path
+                else if (fullPath != null && File.Exists(fullPath))
+                {
+                    Console.WriteLine(File.ReadAllText(fullPath));
+                }
+                // Read if using HOME path (~)
+                else if (cmdArgs[i].Contains('~') && home != null)
+                {
+                    fullPath = Path.Combine(home, cmdArgs[i].Trim('~', '/'));
+                    Console.WriteLine(File.ReadAllText(fullPath));
+                }
+                //else
+                //{
+                //    Console.WriteLine($"{cmdArgs[0]}: {cmdArgs[i]}: No such file or directory");
+                //}
+
+
+            }
+
         }
 
 

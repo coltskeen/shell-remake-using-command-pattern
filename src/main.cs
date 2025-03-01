@@ -26,6 +26,7 @@ namespace src
                 ICommand shellExecutable = new ExecutableCommand(shell);
                 ICommand shellPwd = new PwdCommand(shell);
                 ICommand shellCd = new CdCommand(shell);
+                ICommand shellCat = new CatCommand(shell);
 
                 User user = new User();
 
@@ -63,6 +64,12 @@ namespace src
                 else if (command != null && command.StartsWith("cd"))
                 {
                     user.SetCommand(shellCd);
+                    user.Enter(command);
+                }
+                // If the cat command is provided
+                else if (command != null && command.StartsWith("cat"))
+                {
+                    user.SetCommand(shellCat);
                     user.Enter(command);
                 }
                 else
