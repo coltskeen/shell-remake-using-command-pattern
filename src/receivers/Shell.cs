@@ -141,7 +141,11 @@ namespace src.receivers
             }
         }
 
-
+        /// <summary>
+        /// Reads and displays the contents of files specified in the command string.
+        /// Handles absolute paths, relative paths, and paths using the HOME directory (~).
+        /// </summary>
+        /// <param name="command">The command string containing the "cat" keyword and file paths.</param>
         public void Cat(string command) 
         {
             // Extract the arguments
@@ -169,17 +173,19 @@ namespace src.receivers
                     fullPath = Path.Combine(home, cmdArgs[i].Trim('~', '/'));
                     Console.WriteLine(File.ReadAllText(fullPath));
                 }
-                //else
-                //{
-                //    Console.WriteLine($"{cmdArgs[0]}: {cmdArgs[i]}: No such file or directory");
-                //}
-
-
+                else
+                {
+                    Console.WriteLine($"File not found: {fullPath}");
+                }
             }
-
         }
 
-
+        /// <summary>
+        /// Extracts command arguments from a given command string, handling arguments enclosed in single quotes.
+        /// </summary>
+        /// <param name="command">The command string to be parsed.</param>
+        /// <returns>An array of command arguments.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when the command string is null.</exception>
         private string[] GetCmdArgs(string command)
         {
             // Throw exception if command is null
