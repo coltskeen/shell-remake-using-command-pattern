@@ -5,4 +5,4 @@ I chose C# to gain a better understanding of the classes and methods that can be
 I also chose to use the command design pattern to understand its pros and cons more.
 ["Build Your Own Shell" Challenge](https://app.codecrafters.io/courses/shell/overview).
 
-**Commands implemented:** echo, type, cat, exit, pwd, and cd.
+**Commands implemented:** echo, type, cat, exit, pwd, cd, and running executable files..
