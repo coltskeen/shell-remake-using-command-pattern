@@ -1,12 +1,13 @@
 [![progress-banner](https://backend.codecrafters.io/progress/shell/1ecbfb7c-b057-43f1-befe-78add0ed15c3)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
 
-This is a starting point for C# solutions to the
+This project is my solution to the code crafters challenge to build your own shell. 
+I chose C# to gain a better understanding of the classes and methods that can be used to interact with the file system.
+I also chise to use the command design pattern to understand its pros and cons more.
 ["Build Your Own Shell" Challenge](https://app.codecrafters.io/courses/shell/overview).
 
-In this challenge, you'll build your own POSIX compliant shell that's capable of
+In this challenge, I built my own POSIX compliant shell that's capable of
 interpreting shell commands, running external programs and builtin commands like
-cd, pwd, echo and more. Along the way, you'll learn about shell command parsing,
-REPLs, builtin commands, and more.
+cd, pwd, echo and more.
 
 **Note**: If you're viewing this repo on GitHub, head over to
 [codecrafters.io](https://codecrafters.io) to try the challenge.
